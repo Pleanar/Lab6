@@ -1,8 +1,5 @@
 plugins {
     id 'java'
-    id 'idea'
-    id 'application'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'org.example'
@@ -13,39 +10,18 @@ repositories {
 }
 
 dependencies {
-    implementation ('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2')
-    implementation ('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-}
-
-application {
-    mainClass = 'main.Main'
-}
-
-run {
-    standardInput = System.in
-}
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'main.Main'
-        )
-    }
 }
 
 test {
     useJUnitPlatform()
 }
 
-project.configurations.implementation.setCanBeResolved(true)
-task fatJar(type: Jar){
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-
-    manifest{
-        attributes 'Main-Class':'main.Main'
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'src.Main'
+        )
     }
-    baseName='DemoFat2'
-    from{configurations.implementation.collect{it.isDirectory()? it : zipTree(it)}} with jar
 }
